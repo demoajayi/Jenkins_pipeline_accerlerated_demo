@@ -1,0 +1,25 @@
+---
+ - hosts: STAGE_Server
+   become: true
+
+   tasks:
+     - name: login to dockerhub
+       command: docker login -u daicon001 -p Ibrahim24. 
+
+     - name: Stop any container running
+       command: docker stop demo-container
+       ignore_errors: yes
+
+     - name: Remove stopped container
+       command: docker rm demo-container
+       ignore_errors: yes
+
+     - name: Remove docker image
+       command: docker rmi daicon001/projectpipeline
+       ignore_errors: yes
+
+     - name: Pull default Docker image
+       command: docker pull  daicon001/projectpipeline
+
+     - name: Restart a container
+       command: docker run -it -d --name demo-container -p 8080:8085 daicon001/projectpipeline
